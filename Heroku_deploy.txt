@@ -1,0 +1,9 @@
+requirements.txt
+Procfile (web: gunicorn app:server)
+
+
+git init
+heroku create my-dash-app
+git add
+git commit -m 'Initial'
+git push heroku master
