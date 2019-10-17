@@ -32,9 +32,7 @@ map_layout= go.Layout(
                 style='light'),
             margin=dict(l=10, t=10, b=10, r=10)
         )
-
 ######################
-
 
 app = dash.Dash(__name__)
 server = app.server
@@ -53,8 +51,9 @@ app.layout = html.Div([
     dcc.Graph(
         id = 'map'
     )
-
 ])
+
+############################################################
 
 @app.callback(
     Output(component_id='map', component_property='figure'),
@@ -67,8 +66,8 @@ def update_map(region):
 
     map_data=[
         go.Scattermapbox(
-            lat=trd_selecion.lat,
-            lon=trd_selecion.lon,
+            lat= trd_selecion.lat,
+            lon= trd_selecion.lon,
             mode='markers')
     ]
 

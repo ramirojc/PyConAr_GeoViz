@@ -4,6 +4,8 @@ Procfile (web: gunicorn app:server)
 
 git init
 heroku create my-dash-app
-git add
-git commit -m 'Initial'
+git add .
+git commit -m 'initial'
 git push heroku master
+
+mapbox://styles/ramirojc/ck1i41dhv6mr31ck2qxf4mg39

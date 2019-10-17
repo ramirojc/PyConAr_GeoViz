@@ -7,11 +7,11 @@ from plotly import graph_objs as go
 
 import pandas as pd
 
-mapbox_access_token = 'pk.eyJ1IjoiamFja2x1byIsImEiOiJjajNlcnh3MzEwMHZtMzNueGw3NWw5ZXF5In0.fk8k06T96Ml9CLGgKmk81w'
-
 ##################################################
+
 trd = pd.read_csv('./data/UNI_TRD_ENF17.csv')
-print(trd.CONJ.unique())
+
+mapbox_access_token = 'pk.eyJ1IjoiamFja2x1byIsImEiOiJjajNlcnh3MzEwMHZtMzNueGw3NWw5ZXF5In0.fk8k06T96Ml9CLGgKmk81w'
 
 map_layout = go.Layout(
         mapbox= go.layout.Mapbox(
@@ -20,7 +20,7 @@ map_layout = go.Layout(
             zoom=10,
             pitch=45,
             style='light'),
-        margin= dict(l=10,t=10,b=10,r=10)
+        margin= dict(l=0,t=0,b=0,r=0)
         )
 
 conj_name = {
@@ -30,6 +30,7 @@ conj_name = {
     15616: 'Vale dos Peoes',
     16069: 'Conselheiro Paulino'
 }
+##################################################
 
 app = dash.Dash(__name__)
 server = app.server
@@ -87,11 +88,11 @@ app.layout = html.Div([
     html.Div([
         html.Div([
             dcc.Graph(id = 'map')
-        ], className= 'eight columns'),
+        ], className= 'pretty_container eight columns'),
 
         html.Div([
             dcc.Graph(id= 'aux-graph')
-        ], className= 'four columns')
+        ], className= 'pretty_container four columns')
 
     ], className='row')
 
@@ -104,7 +105,6 @@ app.layout = html.Div([
     Output(component_id='map', component_property='figure'),
     [Input(component_id='dd_region', component_property='value')]
 )
-
 def update_map(region):
     print(region)
 

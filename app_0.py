@@ -9,12 +9,9 @@ server = app.server
 
 app.layout = html.Div([
 
-    html.H1("Mapa de distribucion Electrica"),
-    html.H3("Seleccionar Region"),
-
-    html.Hr(),
-
-
+    html.H1("Mapa de distribucion"),
+    html.P("Esto es una descripcion"),
+    html.Hr()
 
 ])
 

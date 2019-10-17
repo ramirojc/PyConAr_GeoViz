@@ -2,7 +2,6 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 
-#import plotly.graph_objects as go
 from plotly import graph_objs as go
 
 mapbox_access_token = 'pk.eyJ1IjoiamFja2x1byIsImEiOiJjajNlcnh3MzEwMHZtMzNueGw3NWw5ZXF5In0.fk8k06T96Ml9CLGgKmk81w'
@@ -35,8 +34,9 @@ app.layout = html.Div([
             layout= go.Layout(
                 mapbox= go.layout.Mapbox(
                     accesstoken= mapbox_access_token,
-                    center= dict(lat=4.6008531, lon=-74.0651495)
-                )
+                    center= dict(lat=4.6008531, lon=-74.0651495),
+                ),
+                margin=dict(l=10,r=10,t=10,b=10)
             )
         )
     )

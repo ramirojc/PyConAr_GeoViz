@@ -38,7 +38,7 @@ app.layout = html.Div([
         figure = go.Figure(
             data=[
                 go.Bar(x=['enero','feb','mar','abr'], y=[20, 21, 22, 25], name='Temperatura'),
-                go.Scatter(x=['enero','feb','mar','abr'], y=[10, 9, 8, 9], name='Lluvia')
+                go.Scatter(x=['enero','feb','mar','abr'], y=[10, 9, 8, 9], mode='markers', name='Lluvia')
             ],
             layout= go.Layout(
                 title='Clima Argentina',

@@ -112,16 +112,18 @@ def update_map(region, color_var, size_var):
 
     trd_selection = trd[trd.CONJ.isin(region)]
 
+    size_norm = trd_selection[size_var]
+    color_norm = trd_selection[color_var]
+
     map_data = [
         go.Scattermapbox(
             lat= trd_selection.lat,
             lon= trd_selection.lon,
             mode='markers',
             marker= dict(
-                size = trd_selection[size_var],
-                color= trd_selection[color_var],
+                size = size_norm,
+                color= color_norm
             ),
-
         )]
 
     return go.Figure(data=map_data, layout=map_layout)

@@ -124,7 +124,7 @@ def update_map(region, color_var, size_var):
         size_norm = 10
     else:
         trd_max = trd_selection[size_var].quantile(0.95)
-        size_norm = (trd_selection[size_var] / trd_max) * 30
+        size_norm = np.log1p(trd_selection[size_var] / trd_max) * 30
         size_norm.clip(6, 25, inplace=True)
 
     map_data = [

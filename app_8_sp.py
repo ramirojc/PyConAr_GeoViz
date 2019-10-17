@@ -9,9 +9,8 @@ from plotly import graph_objs as go
 import pandas as pd
 import numpy as np
 
-mapbox_access_token = 'pk.eyJ1IjoiamFja2x1byIsImEiOiJjajNlcnh3MzEwMHZtMzNueGw3NWw5ZXF5In0.fk8k06T96Ml9CLGgKmk81w'
-
 ##################################################
+
 trd = pd.read_csv('./data/UNI_TRD_ENF17.csv')
 
 conj_name = {
@@ -26,13 +25,15 @@ trd['CONJ_N'] = trd.CONJ.copy()
 for i,c in enumerate(trd.CONJ_N.unique()):
     trd.CONJ_N.replace(c,i,inplace=True)
 
+mapbox_access_token = 'pk.eyJ1IjoicmFtaXJvamMiLCJhIjoiY2sxaHQ4Mmo0MWl5dDNocDZwb2YzbmtidiJ9.9wLVsaIFFKR8gCQlhIJFEg'
+
 map_layout = go.Layout(
         mapbox= go.layout.Mapbox(
             accesstoken= mapbox_access_token,
             center= dict(lat=trd.lat.mean(), lon=trd.lon.mean()),
             zoom=10,
             pitch=45,
-            style='light'),
+            style='streets'),
         margin= dict(l=0,t=0,b=0,r=0)
         )
 
@@ -43,7 +44,7 @@ FIC_dist_layout = go.Layout(
     barmode='overlay',
     legend_orientation='h'
 )
-
+###################################################
 
 app = dash.Dash(__name__)
 server = app.server
@@ -159,6 +160,7 @@ def update_map(region, color_var, size_var, map_layout_data):
             lat=trd_selection.lat,
             lon=trd_selection.lon,
             mode='markers',
+            text=info,
             marker=dict(
                 size=size_norm,
                 cmin=color_norm.quantile(0.1),
@@ -166,7 +168,7 @@ def update_map(region, color_var, size_var, map_layout_data):
                 color=color_norm,
                 colorscale='RdBu',
                 reversescale=True,
-                showscale=True
+                showscale=True,
             ),
         )]
 
@@ -204,7 +206,7 @@ def update_map(region, color_var, size_var, map_layout_data):
     [Input('map', 'selectedData')]
 )
 def plot_dist(selectedData):
-    print('seleccion:')
+    print(selectedData)
     nbins=40
 
     fig = make_subplots(rows=1, cols=3,
@@ -216,25 +218,25 @@ def plot_dist(selectedData):
         go.Histogram(x=trd.FIC,
                      nbinsx=nbins,
                      histnorm='probability density',
-                     name='Total',
+                     name='FIC Total',
                      opacity=0.6),
-        row=1, col=1)
+            row=1, col=1)
 
     fig.add_trace(
         go.Histogram(x=trd.DIC,
                      nbinsx=nbins,
                      histnorm='probability density',
-                     name='Total',
+                     name='DIC Total',
                      opacity=0.6),
-        row=1, col=2)
+            row=1, col=2)
 
     fig.add_trace(
         go.Histogram(x=trd.ENE_12[trd.ENE_12 < trd.ENE_12.quantile(0.95)],
                      nbinsx=nbins,
                      histnorm='probability density',
-                     name='Total',
+                     name='ENE Total',
                      opacity=0.6),
-        row=1, col=3)
+            row=1, col=3)
 
     if selectedData:
         sel_index = [x['pointIndex'] for x in selectedData['points']]
@@ -243,29 +245,29 @@ def plot_dist(selectedData):
             go.Histogram(x=trd.iloc[sel_index].FIC,
                          nbinsx=nbins,
                          histnorm='probability density',
-                         name='Total',
+                         name='FIC Seleccion',
                          opacity=0.6),
-            row=1, col=1)
+                row=1, col=1)
 
         fig.add_trace(
             go.Histogram(x=trd.iloc[sel_index].DIC,
                          nbinsx=nbins,
                          histnorm='probability density',
-                         name='Total',
+                         name='DIC Seleccion',
                          opacity=0.6),
-            row=1, col=2)
+                row=1, col=2)
 
         fig.add_trace(
             go.Histogram(x=trd.iloc[sel_index].ENE_12[trd.ENE_12 < trd.ENE_12.quantile(0.95)],
                          nbinsx=nbins,
                          histnorm='probability density',
-                         name='Total',
+                         name='ENE Seleccion',
                          opacity=0.6),
-            row=1, col=3)
+                row=1, col=3)
 
     fig.update_layout(margin= dict(l=30,t=30,b=30,r=30),
                       height = 350,
-                      showlegend=False,
+                      legend_orientation = 'h',
                       barmode='overlay')
 
     return fig

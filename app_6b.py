@@ -183,8 +183,8 @@ def update_map(region, color_var, size_var, map_layout_data):
             map_layout.mapbox.center.lon = cam_lon
             map_layout.mapbox.zoom = cam_zoom
 
-    side_div = html.P('lo que quiera')
-    #side_div = html.Iframe(src='./static/ejemplo.pdf', width='100%', height='100%')
+    #side_div = html.P('lo que quiera')
+    side_div = html.Iframe(src='./static/ejemplo.pdf', width='100%', height='100%')
     #side_div = html.Iframe(src='https://conf.scipyla.org/', width='100%', height='100%')
 
     return go.Figure(data=map_data, layout=map_layout), side_div
