@@ -20,17 +20,18 @@ conj_name = {
 
 #################################
 trd = pd.read_csv('./data/UNI_TRD_ENF17.csv')
-print(trd.CONJ.unique())
+#################################
 
 ######################
+
 map_layout= go.Layout(
             mapbox=go.layout.Mapbox(
                 accesstoken=mapbox_access_token,
-                center=dict(lat=trd.lat[0], lon=trd.lon[0]),
+                center=dict(lat=trd.lat.mean(), lon=trd.lon.mean()),
                 zoom=10,
                 pitch=45,
-                style='light'),
-            margin=dict(l=10, t=10, b=10, r=10)
+                style='outdoors'),
+            margin=dict(l=0, t=0, b=0, r=0)
         )
 ######################
 
